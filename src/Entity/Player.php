@@ -6,11 +6,13 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource()
  * @ApiFilter(SearchFilter::class, properties={"name":"exact"})
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
+ * @UniqueEntity("name")
  */
 class Player
 {
