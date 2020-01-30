@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -38,9 +40,15 @@ class Player
      */
     private $token;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Hero", mappedBy="player")
+     */
+    private $heroes;
+
     public function __construct()
     {
         $this->token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+        $this->heroes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +88,37 @@ class Player
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hero[]
+     */
+    public function getHeroes(): Collection
+    {
+        return $this->heroes;
+    }
+
+    public function addHero(Hero $hero): self
+    {
+        if (!$this->heroes->contains($hero)) {
+            $this->heroes[] = $hero;
+            $hero->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHero(Hero $hero): self
+    {
+        if ($this->heroes->contains($hero)) {
+            $this->heroes->removeElement($hero);
+            // set the owning side to null (unless already changed)
+            if ($hero->getPlayer() === $this) {
+                $hero->setPlayer(null);
+            }
+        }
 
         return $this;
     }
