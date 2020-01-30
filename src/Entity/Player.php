@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,6 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ApiResource()
  * @ApiFilter(SearchFilter::class, properties={"name":"exact", "token":"exact"})
+ * @ApiFilter(OrderFilter::class, properties={"score"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
  * @UniqueEntity("name")
  */
