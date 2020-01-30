@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"name":"exact"})
+ * @ApiFilter(SearchFilter::class, properties={"name":"exact", "token":"exact"})
  * @ORM\Entity(repositoryClass="App\Repository\PlayerRepository")
  * @UniqueEntity("name")
  */
