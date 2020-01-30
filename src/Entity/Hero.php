@@ -28,6 +28,11 @@ class Hero
      */
     private $player;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $apiId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Hero
     public function setPlayer(?Player $player): self
     {
         $this->player = $player;
+
+        return $this;
+    }
+
+    public function getApiId(): ?int
+    {
+        return $this->apiId;
+    }
+
+    public function setApiId(int $apiId): self
+    {
+        $this->apiId = $apiId;
 
         return $this;
     }
