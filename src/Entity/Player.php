@@ -33,6 +33,16 @@ class Player
      */
     private $score;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    public function __construct()
+    {
+        $this->token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,6 +68,18 @@ class Player
     public function setScore(?int $score): self
     {
         $this->score = $score;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
